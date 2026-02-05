@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Industrial Machine Maintenance Advisor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>🧠 Industrial Machine Maintenance Advisor</h1>
+        <p>Smart Knowledge-Based Diagnostic System for Machine Health Monitoring</p>
+    </header>
+
+    <main>
+        <div class="form-card">
+            <h2>Enter Machine Parameters</h2>
+            <form method="POST" class="input-form">
+                <label>Vibration (0–100):</label>
+                <input type="number" name="vibration" min="0" max="100" required>
+
+                <label>Temperature (°C):</label>
+                <input type="number" name="temperature" min="0" required>
+
+                <label>Usage Hours:</label>
+                <input type="number" name="usage_hours" min="0" required>
+
+                <label>Days Since Last Service:</label>
+                <input type="number" name="last_service" min="0" required>
+
+                <label>Power Fluctuation?</label>
+                <select name="power_fluctuation">
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>
+                </select>
+
+                <label>Noise Level (dB):</label>
+                <input type="number" name="noise" min="0" max="120" required>
+
+                <label>Sensor Error?</label>
+                <select name="sensor_error">
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>
+                </select>
+
+                <label>Oil Level Low?</label>
+                <select name="oil_level_low">
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>
+                </select>
+
+                <button type="submit" class="btn-primary">Diagnose</button>
+            </form>
+        </div>
+
+        {% if condition %}
+        <div class="result-card">
+            <h2>🩺 Diagnosis Result</h2>
+            <p><strong>Condition:</strong> {{ condition }}</p>
+            <p><strong>Recommended Action:</strong> {{ action }}</p>
+        </div>
+        {% endif %}
+    </main>
+
+    <footer>
+        <a href="{{ url_for('history') }}" class="btn-secondary">📊 View History & Analytics</a>
+    </footer>
+</body>
+</html>

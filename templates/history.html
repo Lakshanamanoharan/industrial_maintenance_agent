@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Maintenance History & Analytics</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header>
+    <h1>📈 Maintenance History & Analytics</h1>
+    <p>Visualizing Machine Performance Trends</p>
+  </header>
+
+  <main>
+    <section class="table-section">
+      <h2>Recorded Maintenance Data</h2>
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>ID</th><th>Vibration</th><th>Temperature</th><th>Noise (dB)</th><th>Condition</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for r in records %}
+          <tr>
+            <td>{{ r[0] }}</td>
+            <td>{{ r[1] }}</td>
+            <td>{{ r[2] }}</td>
+            <td>{{ r[6] }}</td>
+            <td>{{ r[9] }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="chart-section">
+      <canvas id="sensorChart"></canvas>
+      <canvas id="conditionChart"></canvas>
+    </section>
+
+    <div class="buttons">
+      <a href="/" class="btn-primary">🏠 Back</a>
+      <a href="{{ url_for('clear_history') }}" class="btn-danger">🗑️ Clear History</a>
+    </div>
+  </main>
+
+  <script>
+    const records = {{ records|tojson }};
+    const ids = records.map(r => r[0]);
+    const vibration = records.map(r => r[1]);
+    const temperature = records.map(r => r[2]);
+    const noise = records.map(r => r[6]);
+    const conditions = records.map(r => r[9]);
+
+    
+    new Chart(document.getElementById('sensorChart'), {
+      type: 'line',
+      data: {
+        labels: ids,
+        datasets: [
+          { label: 'Vibration', data: vibration, borderColor: '#ff4d4d', tension: 0.3 },
+          { label: 'Temperature', data: temperature, borderColor: '#007bff', tension: 0.3 },
+          { label: 'Noise (dB)', data: noise, borderColor: '#28a745', tension: 0.3 }
+        ]
+      },
+      options: {
+        plugins: { title: { display: true, text: 'Sensor Readings Over Time', font: { size: 18 } } },
+        responsive: true
+      }
+    });
+
+    
+    const counts = {};
+    conditions.forEach(c => counts[c] = (counts[c] || 0) + 1);
+
+    new Chart(document.getElementById('conditionChart'), {
+      type: 'doughnut',
+      data: {
+        labels: Object.keys(counts),
+        datasets: [{
+          label: 'Condition Frequency',
+          data: Object.values(counts),
+          backgroundColor: ['#007bff', '#ffc107', '#dc3545', '#28a745', '#6f42c1', '#17a2b8']
+        }]
+      },
+      options: {
+        plugins: { title: { display: true, text: 'Condition Distribution', font: { size: 18 } } },
+        responsive: true
+      }
+    });
+  </script>
+</body>
+</html>

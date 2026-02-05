@@ -1,0 +1,52 @@
+[
+  {
+    "condition": "vibration > 80 and temperature > 70",
+    "status": "Critical - Severe",
+    "action": "Immediate Shutdown & Notify Supervisor"
+  },
+  {
+    "condition": "vibration > 70 and temperature > 60",
+    "status": "Critical",
+    "action": "Immediate Shutdown"
+  },
+  {
+    "condition": "usage_hours > 1500 and last_service > 200",
+    "status": "Maintenance Overdue",
+    "action": "Schedule Maintenance Immediately"
+  },
+  {
+    "condition": "usage_hours > 1000 and last_service > 180",
+    "status": "Maintenance Due Soon",
+    "action": "Schedule Maintenance Soon"
+  },
+  {
+    "condition": "power_fluctuation and temperature > 60",
+    "status": "Electrical Overheat",
+    "action": "Check Electrical System & Cooling"
+  },
+  {
+    "condition": "noise > 85",
+    "status": "Bearing Fault",
+    "action": "Inspect Bearings"
+  },
+  {
+    "condition": "noise > 70 and vibration > 65",
+    "status": "Mechanical Fault",
+    "action": "Inspect Mechanical Components"
+  },
+  {
+    "condition": "sensor_error",
+    "status": "Sensor Malfunction",
+    "action": "Repair or Replace Sensor"
+  },
+  {
+    "condition": "oil_level_low",
+    "status": "Lubrication Needed",
+    "action": "Refill Oil / Lubricate Machine"
+  },
+  {
+    "condition": "vibration <= 70 and temperature <= 60 and usage_hours <= 1000",
+    "status": "Normal",
+    "action": "Continue Operation"
+  }
+]
